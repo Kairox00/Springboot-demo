@@ -41,7 +41,7 @@ public class StudentControllerTest {
         List<Student> students = new ArrayList<>();
         students.add(student);
         given(studentController.getAllStudents()).willReturn(students);
-        mvc.perform(get("/api/student/").contentType(APPLICATION_JSON))
+        mvc.perform(get("/api/students/").contentType(APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].name", is(student.getName())));
     }
@@ -50,7 +50,7 @@ public class StudentControllerTest {
     public void testGetStudent() throws Exception {
         Student student = getStudent();
         given(studentController.getStudent(1L)).willReturn(student);
-        mvc.perform(get("/api/student/"+student.getId()).contentType(APPLICATION_JSON))
+        mvc.perform(get("/api/students/"+student.getId()).contentType(APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("name", is(student.getName())));
     }
@@ -59,7 +59,7 @@ public class StudentControllerTest {
     public void testAddStudent() throws Exception{
         Student student = getStudent();
         given(studentController.newStudent(student)).willReturn(student);
-        mvc.perform(post("/api/student/").content(asJson(student)).contentType(APPLICATION_JSON))
+        mvc.perform(post("/api/students/").content(asJson(student)).contentType(APPLICATION_JSON))
                 .andExpect(status().isCreated()).andReturn();
     }
 
@@ -67,7 +67,7 @@ public class StudentControllerTest {
     public void testDeleteStudent() throws Exception{
         Student student = getStudent();
         doNothing().when(studentController).deleteStudent(1L);
-        mvc.perform(delete("/api/student?id=" + student.getId()).content(asJson(student)).contentType(APPLICATION_JSON))
+        mvc.perform(delete("/api/students/" + student.getId()).content(asJson(student)).contentType(APPLICATION_JSON))
                 .andExpect(status().isOk()).andReturn();
     }
 
@@ -75,7 +75,7 @@ public class StudentControllerTest {
     public void testUpdateStudent() throws Exception{
         Student student = getStudent();
         given(studentController.newStudent(student)).willReturn(student);
-        mvc.perform(put("/api/student?id=" + student.getId()).content(asJson(student)).contentType(APPLICATION_JSON))
+        mvc.perform(put("/api/students/" + student.getId()).content(asJson(student)).contentType(APPLICATION_JSON))
                 .andExpect(status().isOk()).andReturn();
     }
 

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/student")
+@RequestMapping("/api/students")
 public class StudentController {
     private final StudentService studentService;
 
@@ -36,15 +36,15 @@ public class StudentController {
         return this.studentService.addStudent(student);
     }
 
-    @DeleteMapping()
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteStudent(@RequestParam(value="id") Long id){
+    public void deleteStudent(@PathVariable(value="id") Long id){
         this.studentService.deleteStudent(id);
     }
 
-    @PutMapping()
+    @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Student updateStudent(@RequestParam(value = "id") Long id, @RequestBody Student student){
+    public Student updateStudent(@PathVariable(value = "id") Long id, @RequestBody Student student){
         return this.studentService.updateStudent(id, student);
     }
 }
